@@ -18,9 +18,6 @@ if(isset($_POST["submit"]))
 		//$password=$_POST['password'];
 
 
-
-
-
 		//Check username and password from database
 		$sql="SELECT userID FROM users WHERE username=? and password=?";
 		$result=mysqli_query($db,$sql,$params);
