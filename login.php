@@ -1,8 +1,35 @@
 <?php
 session_start();
+//session control
+if(!isset($_SESSION['uname']) || $_SESSION['uname'] == " " || !isset($_SESSION['uid']) || $_SESSION['uid'] == " ")
+{
+	echo "<script language='javascript'>";
+	echo "window.location='../index.php'";
+	echo "</script> ";
+	exit;
+}
+
+$_SESSION['start'] = time();
+
+if(!isset($_SESSION['expire'])){
+	$_SESSION['expire'] = $_SESSION['start'] + (1* 10) ; // ending a session in 30 seconds
+}
+$now = time();
+
+if($now > $_SESSION['expire'])
+{
+	session_destroy();
+	echo "Your session has expire !  <a href='logout.php'>Click Here to Login</a>";
+}
+else
+{
+	echo "This should be expired in 1 min <a href='logout.php'>Click Here to Login</a>";
+}
+
 include("connection.php"); //Establishing connection with our database
 
 $error = ""; //Variable for storing our errors.
+
 if(isset($_POST["submit"]))
 {
 	if(empty($_POST["username"]) || empty($_POST["password"]))
